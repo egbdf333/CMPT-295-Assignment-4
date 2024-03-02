@@ -6,16 +6,16 @@
 # Authors: AL + Linus Pui
 #
 
-	.globl	clear # Make sure you change the name of this function - see XX function below
+	.globl	lessThan # Make sure you change the name of this function - see XX function below
 	.globl	plus
 	.globl	minus
 	.globl	mul
 
 
-clear: # Description: 
+lessThan: # Description: 
     # Change the name of this function to something more descriptive and add a description above
 	xorl	%eax, %eax	# clears register
-	cmpl	%esi, %edi
+	cmpl	%esi, %edi	# sets %al to 1 if %edi < %esi and 0 if %esi < %edi
 	setl	%al         # See Section 3.6.2 of our textbook for a  
 	ret                 # description of the set* instruction family
 
@@ -52,21 +52,21 @@ mul: # Description: Performs integer multiplication - when both operands are non
 #   (or any kind of instruction that multiplies such as mul)
 # - you must use a loop
 	movl	$0, %eax	# load 0 into result
-	movl	$0, %ebx	# load 0 into counter 
+	movl	$1, %ecx	# load 0 into counter 
 	jmp		cond
 
 loop:
 	addl	%edi, %eax	# add x to result
-	addl	$1, %ebx	# add 1 to counter
+	addl	$1, %ecx	# add 1 to counter
 
 cond:
-	compl	%ebx, %esi	# if %ebx (counter) is less than y (number of times to add)
+	cmpl	%ecx, %esi	# if %ebx (counter) is less than y (number of times to add)
 	jae		loop		# jump to loop
 	ret
 
 # algorithm:
 # result = 0;
-# counter = 0;
+# counter = 1;
 # for (counter < y) {
 #	result += n;
 # }
